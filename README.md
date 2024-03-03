@@ -1,8 +1,6 @@
 # ReliePH Disaster Headline Classifier
 
-The ReliePH Disaster Headline Classifier webscrape and classifies recent disaster news article headlines into various categories of actionable disaster events. 
-
-It utilizes machine learning techniques and advanced text models to enable prompt and targeted relief action responses.
+The ReliePH Disaster Headline Classifier webscrape and classifies recent disaster news article headlines into various categories of actionable disaster events. It utilizes machine learning techniques and advanced text models to enable prompt and targeted relief action responses.
 
 
 ## Installing External Modules
