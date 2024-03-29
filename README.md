@@ -50,7 +50,7 @@ The model is trained using a Multinomial Naive Bayes classifier with text prepro
 
 ## Preprocessing
 
-Text preprocessing involves tasks such as tokenization, stop word removal, and lemmatization. This is handled using the preprocess_text function from the preprocessing module.
+Text preprocessing involves tasks such as tokenization, stop word removal, and lemmatization. This is handled using the preprocess_text function from the `preprocessing.py` file.
 
 ## Creadits
 
