@@ -1,10 +1,9 @@
-import os
 import re
 import nltk
-import pandas as pd
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+from dataset import conflict, earthquake, fire, typhoon, volcanic
 
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -28,16 +27,16 @@ def preprocess_text(text):
     return preprocessed_text
 
 
-def preprocess_csv_files(folder_path):
-    for file in os.listdir(folder_path):
-        if file.endswith('.csv'):
+def preprocess_csv_files():
 
-            df = pd.read_csv(os.path.join(folder_path, file))
+    datas = [conflict, earthquake, fire, typhoon, volcanic]
 
-            df['headline'] = df['headline'].apply(preprocess_text)
-            
-            df.to_csv(f'preprocessed_{file}', index=False)
+    for data in datas:
+
+        data['headline'] = data['headline'].apply(preprocess_text)
+        data.to_csv(f'data', index=False)
 
 
-preprocess_csv_files('dataset')
+if __name__== '__main__':
+    preprocess_csv_files()
 

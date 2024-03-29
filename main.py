@@ -1,27 +1,42 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+from joblib import load
+from preprocessing import preprocess_text
+
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns; sns.set()
-from sklearn.datasets import fetch_20newsgroups
-from sklearn.feature_extraction.text import TfidfVectorizer 
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.pipeline import make_pipeline
-from sklearn.metrics import confusion_matrix
 
-data = fetch_20newsgroups()
+# Load the pre-trained model
+model = load('disaster_classifier.joblib')
 
-categories = data.target_names
+app = FastAPI()
 
-train = fetch_20newsgroups(subset="train", categories=categories)
-test = fetch_20newsgroups(subset="test", categories=categories)
+class HeadlineInput(BaseModel):
+    headline: str
 
-model = make_pipeline(TfidfVectorizer(), MultinomialNB())
-model.fit(train.data, train.target)
+class PredictionOutput(BaseModel):
+    prediction: str
 
-labels = model.predict(test.data)
+@app.post("/classify")
+async def classify_headline(data: HeadlineInput):
+    headline = data.headline
 
-def predict_category(s, train=train, model=model):
-    pred = model.predict([s])
-    return train.target_names[pred[0]]
+    preprocessed_headline = preprocess_text(headline)
 
-
-print(predict_category("disaster"))
+    prediction_probabilities = model.predict_proba([preprocessed_headline])[0]
+    
+    # Get the index of the predicted category with the highest probability
+    max_prob_index = np.argmax(prediction_probabilities)
+    
+    # Get the corresponding predicted category
+    predicted_category = model.classes_[max_prob_index]
+    
+    # Get the probability score of the predicted category
+    prediction_score = prediction_probabilities[max_prob_index]
+    
+    # Set a minimum prediction score threshold
+    min_prediction_score_threshold = 0.7
+    
+    if prediction_score >= min_prediction_score_threshold:
+        return {"prediction": predicted_category}
+    else:
+        return {"prediction": "non-disaster"}
