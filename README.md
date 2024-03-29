@@ -54,6 +54,4 @@ Text preprocessing involves tasks such as tokenization, stop word removal, and l
 
 ## Creadits
 
-This project was developed by:
-
-- **[Christian Morelos](https://github.com/ChanMor)**
+This project was developed by: **[Christian Morelos](https://github.com/ChanMor)**
