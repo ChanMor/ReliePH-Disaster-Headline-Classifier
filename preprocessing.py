@@ -3,7 +3,7 @@ import nltk
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from dataset import conflict, earthquake, fire, typhoon, volcanic
+from dataset import biohazard, conflict, earthquake, fire, typhoon, volcanic
 
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -29,7 +29,7 @@ def preprocess_text(text):
 
 def preprocess_csv_files():
 
-    datas = [conflict, earthquake, fire, typhoon, volcanic]
+    datas = [biohazard, conflict, earthquake, fire, typhoon, volcanic]
 
     for data in datas:
 
